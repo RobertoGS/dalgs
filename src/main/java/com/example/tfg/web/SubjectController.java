@@ -2,7 +2,6 @@ package com.example.tfg.web;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -69,7 +68,8 @@ public class SubjectController {
 	public String formDeleteSubjectFromDegree(@PathVariable("degreeId") Long id_degree,@PathVariable("subjectId") Long id_subject)
 			throws ServletException {
 
-		if (serviceSubject.deleteSubject(id_subject)){
+			
+		if (serviceSubject.deleteSubject(id_subject, id_degree)){
 			return "redirect:/degree/"+id_degree+".htm";
 		}
 		else return "redirect:/error.htm";
@@ -82,26 +82,27 @@ public class SubjectController {
 	protected String getAddNewActivityForm(Model model,
 			@PathVariable("degreeId") Long id) {
 		Subject newSubject = new Subject();
-		newSubject.setCode(serviceSubject.getNextCode());
+//		newSubject.setCode(serviceSubject.getNextCode());
 
 		
 
-		newSubject.setDegree(serviceDegree.getDegree(id));
+//		newSubject.setDegree(serviceDegree.getDegree(id));
 		model.addAttribute("addsubject", newSubject);
 		return "subject/add";
 	}
 
 	@RequestMapping(value = "/degree/{degreeId}/subject/add.htm", method = RequestMethod.POST)
 	// Every Post have to return redirect
-	public String processAddNewActivity(
+	public String processAddNewSubject(
 			@ModelAttribute("addsubject") Subject newSubject,
-			@PathVariable("degreeId") Long id) {
-		//Degree degree = serviceDegree.getDegree(id);
-
-		//newSubject.setDegree(degree);
-		boolean created = serviceSubject.addSubject(newSubject);
+			@PathVariable("degreeId") Long id_degree) {
+		
+		
+		boolean created = serviceSubject.addSubject(newSubject, id_degree);
+	;
+		
 		if (created)
-			return "redirect:/degree/" + id + ".htm";
+			return "redirect:/degree/" + id_degree + ".htm";
 		else
 			return "redirect:/error.htm";
 	}
@@ -113,11 +114,12 @@ public class SubjectController {
 	public String formModifySubjectFromDegree(@PathVariable("degreeId") Long id_degree,@PathVariable("subjectId") Long id_subject, @ModelAttribute("modifySubject")Subject modify)
 
     {
-		modify.setDegree(serviceDegree.getDegree(id_degree));
 		modify.setId(id_subject);
-		modify.setCompetences(serviceCompetence.getCompetencesForSubject(id_subject));
-        serviceSubject.modifySubject(modify);
-        return "redirect:/degree/"+id_degree+".htm";
+		
+		if (serviceSubject.modifySubject(modify))
+			return "redirect:/degree/"+id_degree+".htm";
+		else return "redirect:/error.htm";
+        
     }
 	
 	
@@ -126,7 +128,9 @@ public class SubjectController {
             throws ServletException {
 	  	ModelAndView model = new ModelAndView();
     	Subject p= serviceSubject.getSubject(id_subject);
+    	
     	model.addObject("modifySubject",p);
+    	model.addObject("competences", p.getCompetences());
     	model.setViewName("/subject/modify");
     	
     	return model;
@@ -145,16 +149,14 @@ public class SubjectController {
 
 		Subject p = serviceSubject.getSubject(id_subject);
 		Degree d = serviceDegree.getDegree(id_degree);
-		p.setDegree(d);
+
 		myModel.put("subject", p);
+		myModel.put("degree", d);
 
 
-		List<Competence> competences = serviceCompetence
-				.getCompetencesForSubject(id_subject);
 
-
-		if (competences != null)
-			myModel.put("competences", competences);
+		if (p.getCompetences() != null)
+			myModel.put("competences", p.getCompetences());
 
 		return new ModelAndView("subject/view", "model", myModel);
 	}
@@ -176,16 +178,18 @@ public class SubjectController {
 		} else
 			return "redirect:/error.htm";
 	}
+	
 
 
 
 	@RequestMapping(value = "/degree/{degreeId}/subject/{subjectId}/addCompetences.htm", method = RequestMethod.GET)
 	protected String getAddNewCompetenceForm(
+			@PathVariable("degreeId") Long id_degree,
 			@PathVariable("subjectId") Long id_subject, Model model) {
 
 		Subject s = serviceSubject.getSubject(id_subject);
 		Collection<Competence> competences = serviceCompetence
-				.getCompetencesForDegree(s.getDegree().getId());
+				.getCompetencesForDegree(id_degree);
 
 		model.addAttribute("subject", s);
 		model.addAttribute("competences", competences);
@@ -202,11 +206,12 @@ public class SubjectController {
 			@ModelAttribute("subject") Subject subject, BindingResult result,
 			Model model) {
 
-		Subject aux = serviceSubject.getSubject(id_subject);
+//		Subject aux = serviceSubject.getSubject(id_subject);
 		
 		subject.setId(id_subject);
-		subject.setDegree(aux.getDegree());
-
+		
+//		subject.setDegree(aux.getDegree());
+	
 		try {
 			serviceSubject.modifySubject(subject);
 			return "redirect:/degree/"+ id_degree + "/subject/" + id_subject + ".htm";
@@ -214,6 +219,17 @@ public class SubjectController {
 			return "redirect:/competence/add.htm";
 		}
 
+	}
+	
+	@RequestMapping(value="/degree/${degreeId}/subject/import.htm",method=RequestMethod.GET)
+	public String formImportSubjects(@PathVariable("degreeId") Long id_degree)
+			throws ServletException {
+
+			
+		if (serviceSubject.importCSV(id_degree)){
+			return "redirect:/degree/"+id_degree+".htm";
+		}
+		else return "redirect:/error.htm";
 	}
 
 	/**

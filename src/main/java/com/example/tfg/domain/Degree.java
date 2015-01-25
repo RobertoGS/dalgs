@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -33,10 +34,10 @@ public class Degree {
 	@Column(name = "description", length=250, nullable=false)
 	private String description;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy="degree")//, cascade= CascadeType.ALL)//, orphanRemoval=true)
+	@OneToMany(fetch = FetchType.LAZY)//, mappedBy="degree")//, cascade= CascadeType.ALL)//, orphanRemoval=true)
 	private Collection<Subject> subjects;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy="degree")//, cascade= CascadeType.ALL)//, orphanRemoval=true)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy="degree")//, cascade= CascadeType.ALL)//, orphanRemoval=true)
 	private Collection<Competence> competences;
 	
 	@Column(name = "isDeleted", nullable=false, columnDefinition="boolean default false")

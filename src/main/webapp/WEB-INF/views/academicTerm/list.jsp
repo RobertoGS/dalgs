@@ -58,7 +58,7 @@
 						aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 					</a></li>
 				</c:if>
-				<c:forEach var="index" begin="0" end="${numberOfPages}" step="1">
+				<c:forEach var="index" begin="0" end="${model.numberOfPages}" step="1">
 
 
 					<li><a href="<c:url value='/academicTerm/page/${index}.htm'/>">
@@ -67,7 +67,7 @@
 
 
 				</c:forEach>
-				<c:if test="${currentPage < numberOfPages}">
+				<c:if test="${currentPage < model.numberOfPages}">
 					<li><a
 						href="<c:url value='/academicTerm/page/${currentPage + 1}.htm'/>"
 						aria-label="Next"> <span aria-hidden="true">&raquo;</span>
