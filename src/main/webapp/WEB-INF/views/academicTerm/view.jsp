@@ -18,6 +18,8 @@
 		<div class="panel panel-primary group">
 			<div class="panel-heading">
 				<h3 class="panel-title list">Academic Term Details</h3>
+							<a class="btn list-btn btn-warning"
+				href="<c:url value='/academicTerm/${academicId}/modify.htm'/>">Modify</a>
 
 			</div>
 

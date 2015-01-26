@@ -9,9 +9,9 @@ import com.example.tfg.domain.Course;
 
 @Service
 public interface CourseService {
-	public boolean addCourse(Course course);
+	public boolean addCourse(Course course, Long id_academic);
 	public List<Course> getAll();
-	public boolean modifyCourse(Course course);
+	public boolean modifyCourse(Course course, Long id_academic);
 	public  Course getCourse(Long id);
 	public boolean deleteCourse(Long id);
    

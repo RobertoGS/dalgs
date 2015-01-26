@@ -64,9 +64,9 @@ public class CourseController {
 		model.addAttribute("activities",serviceActivity.getAll());
 		model.addAttribute("addcourse", newCourse);
 		
-		List<Subject> subjects = serviceSubject.getSubjectsForDegree(academic.getDegree().getId());
+//		List<Subject> subjects = serviceSubject.getSubjectsForDegree(academic.getDegree().getId());
 		model.addAttribute("academicTerm", academic);
-		model.addAttribute("subjects", subjects);
+		model.addAttribute("subjects", academic.getDegree().getSubjects());
 		return "course/add";
 	}
 
@@ -76,15 +76,15 @@ public class CourseController {
 			@ModelAttribute("addcourse") Course newCourse, BindingResult result, Model model) {
 
 		
-		AcademicTerm academic = serviceAcademic.getAcademicTerm(id_academic); 
-		academic.setId(id_academic);
-		newCourse.setAcademicTerm(academic);
+//		AcademicTerm academic = serviceAcademic.getAcademicTerm(id_academic); 
+//		academic.setId(id_academic);
+//		newCourse.setAcademicTerm(academic);
 		
 		if(newCourse.getSubject() == null)	
 				return "redirect:/academicTerm/"+id_academic+"/course/add.htm";
 		
 		if (!result.hasErrors()) {
-			boolean created = serviceCourse.addCourse(newCourse);
+			boolean created = serviceCourse.addCourse(newCourse,id_academic);
 			
 		
 
@@ -130,9 +130,9 @@ public class CourseController {
 		AcademicTerm academic = serviceAcademic.getAcademicTerm(id_academic);
 		model.addAttribute("idSubject", p.getSubject().getId());
 		
-		List<Subject> subjects = serviceSubject.getSubjectsForDegree(academic.getDegree().getId());
+//		List<Subject> subjects = serviceSubject.getSubjectsForDegree(academic.getDegree().getId());
 		model.addAttribute("academicTerm",academic);
-		model.addAttribute("subjects", subjects);
+		model.addAttribute("subjects", academic.getDegree().getSubjects());
 		
 		model.addAttribute("activities", serviceActivity.getAll());
 		model.addAttribute("modifyCourse", p);
@@ -153,8 +153,8 @@ public class CourseController {
 		
 		if (!result.hasErrors()) {
 			modify.setId(id_course);
-			modify.setAcademicTerm(serviceAcademic.getAcademicTerm(id_academic));
-			boolean success = serviceCourse.modifyCourse(modify);
+//			modify.setAcademicTerm(serviceAcademic.getAcademicTerm(id_academic));
+			boolean success = serviceCourse.modifyCourse(modify, id_academic);
 			if (success)
 				return "redirect:/academicTerm/"+id_academic+"/course/"+id_course+".htm";
 		}

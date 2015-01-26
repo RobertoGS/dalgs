@@ -25,7 +25,7 @@ public class AcademicTermServiceImp implements AcademicTermService {
 	 		 academicTerm.setId(a);
 		 	return daoAcademicTerm.saveAcademicTerm(academicTerm);
 	 	 }
-	 	 else if (!daoAcademicTerm.exists(academicTerm.getTerm(), academicTerm.getDegree().getId()))
+	 	 else if (!daoAcademicTerm.exists(academicTerm))
 				return daoAcademicTerm.addAcademicTerm(academicTerm);
 	 	 
 		 	return daoAcademicTerm.saveAcademicTerm(academicTerm);
@@ -35,8 +35,9 @@ public class AcademicTermServiceImp implements AcademicTermService {
 
 
 	@Transactional(readOnly = false)
-	public boolean modifyAcademicTerm(AcademicTerm academicTerm) {
-	 	if (!daoAcademicTerm.exists(academicTerm.getTerm(), academicTerm.getDegree().getId()))
+	public boolean modifyAcademicTerm(AcademicTerm academicTerm, Long id_academic) {
+	 	academicTerm.setId(id_academic);
+		if (!daoAcademicTerm.exists(academicTerm))
 	 		return daoAcademicTerm.saveAcademicTerm(academicTerm);
 	 	return false;
 	}

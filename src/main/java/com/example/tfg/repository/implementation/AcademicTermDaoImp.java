@@ -132,13 +132,13 @@ public class AcademicTermDaoImp implements AcademicTermDao {
 	}*/
 
 	
-	public boolean exists(String term, Long id_degree) {
-		Degree degree = em.getReference(Degree.class, id_degree);
+	public boolean exists(AcademicTerm academicTerm) {
+	//	Degree degree = em.getReference(Degree.class, academicTerm.getDegree().getId());
 
 		Query query = em
 				.createQuery("select a from AcademicTerm a where a.degree=?1 and a.term=?2");
-		query.setParameter(1, degree);
-		query.setParameter(2, term);
+		query.setParameter(1, academicTerm.getDegree());
+		query.setParameter(2, academicTerm.getTerm());
 
 
 		if (query.getResultList().isEmpty())

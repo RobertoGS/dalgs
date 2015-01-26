@@ -78,9 +78,9 @@ public class ActivityController {
 
 		
 		if (!result.hasErrors()) {
-			newactivity.setCourse(serviceCourse.getCourse(id_course));
+//			newactivity.setCourse(serviceCourse.getCourse(id_course));
 			
-			boolean created = serviceActivity.addActivity(newactivity);
+			boolean created = serviceActivity.addActivity(newactivity, id_course);
 			if (created){
 				
 				return "redirect:/academicTerm/" + id_academicTerm + "/course/"+id_course+"/activity/"+ newactivity.getId() +"/modify.htm";
@@ -131,10 +131,10 @@ public class ActivityController {
 
 	
 		if (!result.hasErrors()) {
-			activity.setId(id_activity);
-			activity.setCourse(serviceCourse.getCourse(id_course));
-			activity.setCompetenceStatus(serviceActivity.getActivity(id_activity).getCompetenceStatus());
-			boolean success = serviceActivity.modifyActivity(activity);
+//			activity.setId(id_activity);
+//			activity.setCourse(serviceCourse.getCourse(id_course));
+//			activity.setCompetenceStatus(serviceActivity.getActivity(id_activity).getCompetenceStatus());
+			boolean success = serviceActivity.modifyActivity(activity, id_activity, id_course);
 			if (success){
 				
 				return "redirect:/academicTerm/"+id_academicTerm +"/course/"+ id_course+"/activity/"+id_activity+".htm";
@@ -154,18 +154,22 @@ public class ActivityController {
 			Model model) throws ServletException {
 		
 	
-		Activity p = serviceActivity.getActivity(id);
+//		Activity p = serviceActivity.getActivity(id);
 		if (!result.hasErrors()) 
-				if(serviceActivity.existsCompetenceStatus(id, competencestatus.getCompetence().getId()))
-					return  "redirect:/academicTerm/"+ id_academicTerm+"/course/"+id_course+"/activity/"+id+"/modify.htm";
-
-				if( competencestatus.getPercentage() <= 0.0 || competencestatus.getPercentage() > 100.0)		
-					return  "redirect:/academicTerm/"+ id_academicTerm+"/course/"+id_course+"/activity/"+id+"/modify.htm";
+			
+		if (serviceActivity.addCompetences(id, competencestatus))
+			return  "redirect:/academicTerm/"+ id_academicTerm+"/course/"+id_course+"/activity/"+id+"/modify.htm";
+//				if(serviceActivity.existsCompetenceStatus(id, competencestatus.getCompetence().getId()))
+//					return  "redirect:/academicTerm/"+ id_academicTerm+"/course/"+id_course+"/activity/"+id+"/modify.htm";
+//
+//				if( competencestatus.getPercentage() <= 0.0 || competencestatus.getPercentage() > 100.0)		
+//					return  "redirect:/academicTerm/"+ id_academicTerm+"/course/"+id_course+"/activity/"+id+"/modify.htm";
 				 
 					
 
-			p.getCompetenceStatus().add(competencestatus);
-			serviceActivity.modifyActivity(p);
+//			p.getCompetenceStatus().add(competencestatus);
+//			modify
+			
 
 		return  "redirect:/academicTerm/"+ id_academicTerm+"/course/"+id_course+"/activity/"+id+"/modify.htm";
 	}

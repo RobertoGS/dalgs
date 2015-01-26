@@ -9,11 +9,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.tfg.domain.Activity;
-import com.example.tfg.domain.Competence;
 import com.example.tfg.domain.CompetenceStatus;
 import com.example.tfg.repository.ActivityDao;
-import com.example.tfg.repository.CourseDao;
 import com.example.tfg.service.ActivityService;
+import com.example.tfg.service.CourseService;
 
 @Service
 public class ActivityServiceImp implements ActivityService {
@@ -22,10 +21,11 @@ public class ActivityServiceImp implements ActivityService {
 	private ActivityDao daoActivity;
 
 	@Autowired
-	private CourseDao daoCourse;
+	private CourseService serviceCourse;
 
 	@Transactional(readOnly = false)
-	public boolean addActivity(Activity activity) {
+	public boolean addActivity(Activity activity, Long id_course) {
+		activity.setCourse(serviceCourse.getCourse(id_course));
 		if (!daoActivity.existByCode(activity.getCode()))
 			return daoActivity.addActivity(activity);
 		else
@@ -39,7 +39,10 @@ public class ActivityServiceImp implements ActivityService {
 	}
 
 	@Transactional(readOnly = false)
-	public boolean modifyActivity(Activity activity) {
+	public boolean modifyActivity(Activity activity, Long id_activity, Long id_course) {
+		activity.setId(id_activity);
+		activity.setCourse(serviceCourse.getCourse(id_course));
+		activity.setCompetenceStatus(daoActivity.getActivity(id_activity).getCompetenceStatus());
 		return daoActivity.saveActivity(activity);
 
 	}
@@ -115,5 +118,18 @@ public class ActivityServiceImp implements ActivityService {
 	public boolean existsCompetenceStatus(Long id_activity, Long id_competence) {
 		return daoActivity.existsCompetenceStatus(id_activity, id_competence);
 	}
+
+	@Transactional(readOnly = false)
+	public boolean addCompetences(Long id, CompetenceStatus competencestatus) {
+		Activity p = daoActivity.getActivity(id);
+		if(daoActivity.existsCompetenceStatus(id, competencestatus.getCompetence().getId()))
+			return false;
+		if(competencestatus.getPercentage() <= 0.0 || competencestatus.getPercentage() > 100.0)
+			return false;
+		p.getCompetenceStatus().add(competencestatus);
+		return daoActivity.saveActivity(p);
+	}
+
+	
 
 }

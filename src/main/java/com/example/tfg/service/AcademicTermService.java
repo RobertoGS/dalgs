@@ -10,7 +10,7 @@ import com.example.tfg.domain.AcademicTerm;
 public interface AcademicTermService {
 	public boolean addAcademicTerm(AcademicTerm academicTerm);
 	//public List<AcademicTerm> getAll();
-	public boolean modifyAcademicTerm(AcademicTerm academicTerm);
+	public boolean modifyAcademicTerm(AcademicTerm academicTerm, Long id_academic);
 	public  List<AcademicTerm> getAcademicsTerm(Integer pageIndex);//String term);
 	
 	//public boolean deleteTerm(String term);

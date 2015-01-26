@@ -8,11 +8,11 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.tfg.domain.AcademicTerm;
-import com.example.tfg.domain.Competence;
 import com.example.tfg.domain.Course;
 import com.example.tfg.repository.CourseDao;
-import com.example.tfg.repository.DegreeDao;
+import com.example.tfg.service.AcademicTermService;
 import com.example.tfg.service.CourseService;
+import com.example.tfg.service.DegreeService;
 
 @Service
 public class CourseServiceImp implements CourseService {
@@ -20,11 +20,17 @@ public class CourseServiceImp implements CourseService {
 	@Autowired
 	private CourseDao daoCourse;
 	
-	@Autowired
-	private DegreeDao daoDegree;
+//	@Autowired
+//	private DegreeService serviceDegree;
+	
+	@Autowired 
+	private AcademicTermService serviceAcademicTerm;
 	
 	@Transactional(readOnly = false)
-	public boolean addCourse(Course course) {
+	public boolean addCourse(Course course, Long id_academic) {
+		AcademicTerm academic = serviceAcademicTerm.getAcademicTerm(id_academic); 
+		
+		course.setAcademicTerm(academic);
 		Long aux = daoCourse.isDisabled(course.getAcademicTerm().getId(), course.getSubject().getId());
 		 if(aux!=null){
 			 course.setId(aux);
@@ -43,7 +49,8 @@ public class CourseServiceImp implements CourseService {
 	}
 
 	@Transactional(readOnly = false)
-	public boolean modifyCourse(Course course){
+	public boolean modifyCourse(Course course, Long id_academic){
+		course.setAcademicTerm(serviceAcademicTerm.getAcademicTerm(id_academic));
 		return daoCourse.saveCourse(course);
 	}
 	
