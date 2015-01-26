@@ -11,6 +11,7 @@ import com.example.tfg.domain.AcademicTerm;
 import com.example.tfg.domain.Course;
 import com.example.tfg.repository.CourseDao;
 import com.example.tfg.service.AcademicTermService;
+import com.example.tfg.service.ActivityService;
 import com.example.tfg.service.CourseService;
 import com.example.tfg.service.DegreeService;
 
@@ -19,6 +20,8 @@ public class CourseServiceImp implements CourseService {
 
 	@Autowired
 	private CourseDao daoCourse;
+	
+	@Autowired ActivityService serviceActivity;
 	
 //	@Autowired
 //	private DegreeService serviceDegree;
@@ -61,7 +64,10 @@ public class CourseServiceImp implements CourseService {
 	
 	@Transactional(propagation = Propagation.REQUIRED)
 	public boolean deleteCourse(Long id){
-		return daoCourse.deleteCourse(id);
+		Course course = daoCourse.getCourse(id);
+		if(serviceActivity.deleteActivitiesFromCourse(course))
+			return daoCourse.deleteCourse(id);
+		return false;
 	}
 
 	/*@Transactional(readOnly = true)
@@ -79,6 +85,19 @@ public class CourseServiceImp implements CourseService {
 	public List<Course> getCoursesByAcademicTerm(Long id_academic) {
 		
 		return daoCourse.getCoursesByAcademicTerm(id_academic);
+	}
+
+	
+	public boolean deleteCoursesFromAcademic(AcademicTerm academic) {
+		boolean deleted = false;
+		for(Course course: academic.getCourses()){
+			deleted = serviceActivity.deleteActivitiesFromCourse(course);
+			if (!deleted) break;	
+		}
+		if (deleted) 
+			if(daoCourse.deleteCoursesFromAcademic(academic))
+				return true;
+		return deleted;
 	}
 
 

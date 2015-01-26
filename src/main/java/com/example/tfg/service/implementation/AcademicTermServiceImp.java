@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.tfg.domain.AcademicTerm;
 import com.example.tfg.repository.AcademicTermDao;
 import com.example.tfg.service.AcademicTermService;
+import com.example.tfg.service.CourseService;
 
 @Service
 public class AcademicTermServiceImp implements AcademicTermService {
@@ -16,6 +17,9 @@ public class AcademicTermServiceImp implements AcademicTermService {
 	
 	@Autowired
 	private AcademicTermDao daoAcademicTerm;
+	
+	@Autowired
+	private CourseService serviceCourse;
 
 	@Transactional(readOnly = false)
 	public boolean addAcademicTerm(AcademicTerm academicTerm) {
@@ -52,9 +56,13 @@ public class AcademicTermServiceImp implements AcademicTermService {
 		return daoAcademicTerm.deleteTerm(term);
 	}*/
 	
-	@Transactional(propagation = Propagation.REQUIRED)
+	@Transactional(readOnly = false) // propagation = Propagation.REQUIRED)
 	public boolean deleteAcademicTerm(Long id_academic) {
-		return daoAcademicTerm.deleteAcademicTerm(id_academic);
+		AcademicTerm academic = daoAcademicTerm.getAcademicTermById(id_academic);
+	 if(academic.getCourses().isEmpty() || serviceCourse.deleteCoursesFromAcademic(academic))
+
+			return daoAcademicTerm.deleteAcademicTerm(id_academic);
+		return false;
 	}
 
 	@Transactional(readOnly = false)

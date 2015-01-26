@@ -60,7 +60,7 @@ public class ActivityController {
 	@RequestMapping(value = "/academicTerm/{academicId}/course/{courseId}/add.htm", method = RequestMethod.GET)
 	protected String getAddNewActivityForm(@PathVariable("academicId") Long id_Long, @PathVariable("courseId") Long id_course, Model model) {
 		Activity newActivity = new Activity();
-		newActivity.setCode(serviceActivity.getNextCode());
+//		newActivity.setCode(serviceActivity.getNextCode());
 		newActivity.setCourse(serviceCourse.getCourse(id_course));
 		model.addAttribute("addactivity", newActivity);		
 	
@@ -187,7 +187,7 @@ public class ActivityController {
 			throws ServletException {
 
 		if (serviceActivity.deleteActivity(id_activity)) {
-			return "redirect:/academicTerm/"+ id_AcademicTerm + "/course/"+id_course+"/activity/"+id_activity+"/modify.htm";
+			return "redirect:/academicTerm/"+ id_AcademicTerm + "/course/"+id_course+".htm";
 		} else
 			return "redirect:/error.htm";
 	}

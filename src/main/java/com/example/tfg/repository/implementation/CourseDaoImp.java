@@ -130,5 +130,21 @@ public class CourseDaoImp implements CourseDao {
 		return aux.getId();
 	}
 
+	@Override
+	public boolean deleteCoursesFromAcademic(AcademicTerm academic) {
+		try{
+			Query query = em.createQuery("UPDATE Course c SET c.isDeleted = true where c.academicTerm=?1");
+				
+				query.setParameter(1, academic);
+			    query.executeUpdate();
+			
+			}catch(Exception e){
+
+				return false;
+			}
+			return true;
+		
+	}
+
 
 }

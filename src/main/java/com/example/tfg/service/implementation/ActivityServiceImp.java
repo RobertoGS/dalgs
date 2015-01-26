@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.tfg.domain.Activity;
 import com.example.tfg.domain.CompetenceStatus;
+import com.example.tfg.domain.Course;
 import com.example.tfg.repository.ActivityDao;
 import com.example.tfg.service.ActivityService;
 import com.example.tfg.service.CourseService;
@@ -105,8 +106,8 @@ public class ActivityServiceImp implements ActivityService {
 				}
 				
 			}
-			daoActivity.saveActivity(a);
-			return true;
+			return daoActivity.saveActivity(a);
+			
 
 		} catch (Exception e) {
 			return false;
@@ -114,10 +115,10 @@ public class ActivityServiceImp implements ActivityService {
 	
 	}
 
-	@Transactional(readOnly = true)
-	public boolean existsCompetenceStatus(Long id_activity, Long id_competence) {
-		return daoActivity.existsCompetenceStatus(id_activity, id_competence);
-	}
+//	@Transactional(readOnly = true)
+//	public boolean existsCompetenceStatus(Long id_activity, Long id_competence) {
+//		return daoActivity.existsCompetenceStatus(id_activity, id_competence);
+//	}
 
 	@Transactional(readOnly = false)
 	public boolean addCompetences(Long id, CompetenceStatus competencestatus) {
@@ -128,6 +129,11 @@ public class ActivityServiceImp implements ActivityService {
 			return false;
 		p.getCompetenceStatus().add(competencestatus);
 		return daoActivity.saveActivity(p);
+	}
+
+	
+	public boolean deleteActivitiesFromCourse(Course course) {
+		return daoActivity.deleteActivitiesFromCourse(course);
 	}
 
 	

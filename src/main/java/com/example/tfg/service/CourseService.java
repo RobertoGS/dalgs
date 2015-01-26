@@ -18,6 +18,7 @@ public interface CourseService {
 	//public List<Course> getCoursesByAcademicTerm(String term);
 	
 	public List<Course> getCoursesByAcademicTerm(Long id_academic);
+	public boolean deleteCoursesFromAcademic(AcademicTerm academic);
 
 
 }

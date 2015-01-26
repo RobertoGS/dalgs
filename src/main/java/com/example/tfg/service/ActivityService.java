@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.tfg.domain.Activity;
 import com.example.tfg.domain.CompetenceStatus;
+import com.example.tfg.domain.Course;
 
 
 
@@ -22,7 +23,8 @@ public interface ActivityService {
 	public Activity getActivityByName(String string);
 	public boolean deleteCompetenceActivity(Long id_competenceStatus,
 			Long id_Activity);
-	public boolean existsCompetenceStatus(Long id_activity, Long id_competence);
+//	public boolean existsCompetenceStatus(Long id_activity, Long id_competence);
 	public boolean addCompetences(Long id, CompetenceStatus competencestatus);
+	public boolean deleteActivitiesFromCourse(Course course);
 
 }

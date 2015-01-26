@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.tfg.domain.Activity;
 import com.example.tfg.domain.Competence;
+import com.example.tfg.domain.Course;
 @Repository
 public interface ActivityDao {
 	public boolean addActivity(Activity activity);
@@ -19,6 +20,7 @@ public interface ActivityDao {
 	public String getNextCode();
 	public Activity getActivityByName(String string);
 	public boolean existsCompetenceStatus(Long id_activity, Long id_competence);
+	public boolean deleteActivitiesFromCourse(Course course);
 
 
 }

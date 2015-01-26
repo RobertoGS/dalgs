@@ -131,6 +131,22 @@ public class ActivityDaoImp implements ActivityDao {
 	}
 
 	
+	public boolean deleteActivitiesFromCourse(Course course) {
+		
+		try{
+			Query query = em.createQuery("UPDATE Activity a SET a.isDeleted = true where a.course=?1");
+				
+				query.setParameter(1, course);
+			    query.executeUpdate();
+			
+			}catch(Exception e){
+
+				return false;
+			}
+			return true;
+	}
+
+	
 	
 
 }

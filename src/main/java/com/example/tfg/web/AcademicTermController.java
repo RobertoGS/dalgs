@@ -158,7 +158,7 @@ public class AcademicTermController {
 			throws ServletException {
 
 		if (serviceAcademicTerm.deleteAcademicTerm(id_academic)) {
-			return "redirect:/academicTerm.htm";
+			return "redirect:/academicTerm/page/0.htm";
 		} else
 			return "redirect:/error.htm";
 	}
