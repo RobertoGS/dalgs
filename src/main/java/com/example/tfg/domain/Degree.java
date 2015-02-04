@@ -34,7 +34,7 @@ public class Degree {
 	@Column(name = "description", length=250, nullable=false)
 	private String description;
 	
-	@OneToMany(fetch = FetchType.LAZY)//, mappedBy="degree")//, cascade= CascadeType.ALL)//, orphanRemoval=true)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy="degree")//, cascade= CascadeType.ALL)//, orphanRemoval=true)
 	private Collection<Subject> subjects;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy="degree")//, cascade= CascadeType.ALL)//, orphanRemoval=true)
@@ -52,9 +52,11 @@ public class Degree {
 		 super();
 	}
 	
+	
 	public Long getId() {
 		return id;
 	}
+	
 	public void setId(Long id) {
 		this.id = id;
 	}

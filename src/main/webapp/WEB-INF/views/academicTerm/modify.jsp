@@ -25,7 +25,7 @@
 				<div class="form-group">
 					<label>Term: </label>
 					<form:input path="term" class="form-control" required="true" length="20"  />
-					<form:hidden path="degree"/>
+				
 				</div>		
 				
 				<input type="submit" class="btn btn-success" value="Update">

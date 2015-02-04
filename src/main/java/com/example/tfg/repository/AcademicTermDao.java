@@ -3,6 +3,7 @@ package com.example.tfg.repository;
 import java.util.List;
 
 import com.example.tfg.domain.AcademicTerm;
+import com.example.tfg.domain.Degree;
 
 public interface AcademicTermDao {
 
@@ -23,7 +24,7 @@ public interface AcademicTermDao {
 	public boolean exists(AcademicTerm academicTerm);
 	public boolean existTerm(String term);
 	public boolean modifyTerm(String term, String newTerm);
-	public Long isDisabled(String term, Long id);
+	public Long isDisabled(String term, Degree degree);
 
 	public Integer numberOfPages();
 }

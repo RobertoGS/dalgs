@@ -20,7 +20,7 @@ import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "academicterm", uniqueConstraints = {@UniqueConstraint(columnNames={"term", "id_degree"})})
-@Where(clause = "isDeleted='false'")
+@Where(clause = "isDeleted ='false'")
 public class AcademicTerm {
 	
 	
@@ -72,11 +72,11 @@ public class AcademicTerm {
 		this.term = term;
 	}
 
-	public boolean isDeleted() {
+	public Boolean isDeleted() {
 		return isDeleted;
 	}
 
-	public void setDeleted(boolean isDeleted) {
+	public void setDeleted(Boolean isDeleted) {
 		this.isDeleted = isDeleted;
 	}
 

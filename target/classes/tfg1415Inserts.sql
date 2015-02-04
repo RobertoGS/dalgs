@@ -12,26 +12,26 @@ INSERT INTO academicterm (id_academicterm,term, id_degree) VALUES (5, '2015-2016
 INSERT INTO academicterm (id_academicterm,term, id_degree) VALUES (6, '2015-2016', '3');
 
 -- Subject Inserts
-INSERT INTO subject (id_subject,code_subject,description,name) VALUES (1,'SUB1','Ingenieria Software','IS');
-INSERT INTO subject (id_subject,code_subject,description,name) VALUES (2,'SUB2','Bases de Datos','BD');
-INSERT INTO subject (id_subject,code_subject,description,name) VALUES (3,'SUB3','Sistemas Operativos','SO');
-INSERT INTO subject (id_subject,code_subject,description,name) VALUES (4,'SUB4','Ingenieria Software','IS');
-INSERT INTO subject (id_subject,code_subject,description,name) VALUES (5,'SUB5','Bases de Datos','BD');
-INSERT INTO subject (id_subject,code_subject,description,name) VALUES (6,'SUB6','Sistemas Operativos','SO'); 
-INSERT INTO subject (id_subject,code_subject,description,name) VALUES (7,'SUB7','Ingenieria Software','IS');
-INSERT INTO subject (id_subject,code_subject,description,name) VALUES (8,'SUB8','Bases de Datos','BD');
-INSERT INTO subject (id_subject,code_subject,description,name) VALUES (9,'SUB9','Sistemas Operativos','SO');
+INSERT INTO subject (id_subject,code_subject,description,name, id_degree) VALUES (1,'SUB1','Ingenieria Software','IS',1);
+INSERT INTO subject (id_subject,code_subject,description,name, id_degree) VALUES (2,'SUB2','Bases de Datos','BD',1);
+INSERT INTO subject (id_subject,code_subject,description,name, id_degree) VALUES (3,'SUB3','Sistemas Operativos','SO',1);
+INSERT INTO subject (id_subject,code_subject,description,name, id_degree) VALUES (4,'SUB4','Ingenieria Software','IS',2);
+INSERT INTO subject (id_subject,code_subject,description,name, id_degree) VALUES (5,'SUB5','Bases de Datos','BD',2);
+INSERT INTO subject (id_subject,code_subject,description,name, id_degree) VALUES (6,'SUB6','Sistemas Operativos','SO',2); 
+INSERT INTO subject (id_subject,code_subject,description,name, id_degree) VALUES (7,'SUB7','Ingenieria Software','IS',3);
+INSERT INTO subject (id_subject,code_subject,description,name, id_degree) VALUES (8,'SUB8','Bases de Datos','BD',3);
+INSERT INTO subject (id_subject,code_subject,description,name, id_degree) VALUES (9,'SUB9','Sistemas Operativos','SO',3);
 
 --Degree-subjects Inserts
-INSERT INTO degree_subject(degree_id_degree, subjects_id_subject) VALUES (1,1);
-INSERT INTO degree_subject(degree_id_degree, subjects_id_subject) VALUES (1,2);
-INSERT INTO degree_subject(degree_id_degree, subjects_id_subject) VALUES (3,4);
-INSERT INTO degree_subject(degree_id_degree, subjects_id_subject) VALUES (1,6);
-INSERT INTO degree_subject(degree_id_degree, subjects_id_subject) VALUES (2,3);
-INSERT INTO degree_subject(degree_id_degree, subjects_id_subject) VALUES (2,7);
-INSERT INTO degree_subject(degree_id_degree, subjects_id_subject) VALUES (2,8);
-INSERT INTO degree_subject(degree_id_degree, subjects_id_subject) VALUES (3,5);
-INSERT INTO degree_subject(degree_id_degree, subjects_id_subject) VALUES (3,9);
+--INSERT INTO degree_subject(degree_id_degree, subjects_id_subject) VALUES (1,1);
+--INSERT INTO degree_subject(degree_id_degree, subjects_id_subject) VALUES (1,2);
+--INSERT INTO degree_subject(degree_id_degree, subjects_id_subject) VALUES (3,4);
+--INSERT INTO degree_subject(degree_id_degree, subjects_id_subject) VALUES (1,6);
+--INSERT INTO degree_subject(degree_id_degree, subjects_id_subject) VALUES (2,3);
+--INSERT INTO degree_subject(degree_id_degree, subjects_id_subject) VALUES (2,7);
+--INSERT INTO degree_subject(degree_id_degree, subjects_id_subject) VALUES (2,8);
+--INSERT INTO degree_subject(degree_id_degree, subjects_id_subject) VALUES (3,5);
+--INSERT INTO degree_subject(degree_id_degree, subjects_id_subject) VALUES (3,9);
 
 
 

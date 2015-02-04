@@ -16,8 +16,8 @@ public class CompetenceStatus {
 	
 
 	@Basic
-	@Column(name = "percentage", nullable = false, columnDefinition = "double default 0.0")
-	private double percentage;
+	@Column(name = "percentage", nullable = false, columnDefinition = "INTEGER DEFAULT 0")
+	private Integer percentage;
  
 	public Competence getCompetence() {
 		return competence;
@@ -25,10 +25,10 @@ public class CompetenceStatus {
 	public void setCompetence(Competence competence) {
 		this.competence = competence;
 	}
-	public double getPercentage() {
+	public Integer getPercentage() {
 		return percentage;
 	}
-	public void setPercentage(double percentage) {
+	public void setPercentage(Integer percentage) {
 		this.percentage = percentage;
 	}
 

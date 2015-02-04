@@ -147,11 +147,11 @@ public class AcademicTermDaoImp implements AcademicTermDao {
 		return true;
 	}
 
-	public Long isDisabled(String term, Long id_degree) {
-		Degree degree = em.getReference(Degree.class, id_degree);
+	public Long isDisabled(String term, Degree degree) {
+//		Degree degree = em.getReference(Degree.class, id_degree);
 
 		Query query = em
-				.createQuery("select a from AcademicTerm a where a.degree=?1 and a.term=?2 and a.isDeleted=1");
+				.createQuery("select a from AcademicTerm a where a.degree=?1 and a.term=?2");
 		query.setParameter(1, degree);
 		query.setParameter(2, term);
 
@@ -159,7 +159,7 @@ public class AcademicTermDaoImp implements AcademicTermDao {
 		if (query.getResultList().isEmpty())
 			return null;
 
-		AcademicTerm aux = (AcademicTerm) query.getSingleResult();
+		AcademicTerm aux =  (AcademicTerm) query.getSingleResult();
 		return aux.getId();
 	}
 	
