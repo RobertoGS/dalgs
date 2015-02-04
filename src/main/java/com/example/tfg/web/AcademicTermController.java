@@ -98,17 +98,17 @@ public class AcademicTermController {
 	}
 	
 	@RequestMapping(value = "/academicTerm/{academicId}.htm", method = RequestMethod.GET)
-	protected ModelAndView formViewAcademicTermDegree(@PathVariable("academicId") Long id_degree)
+	protected ModelAndView formViewAcademicTermDegree(@PathVariable("academicId") Long id_academic)
 			throws ServletException {
 		Map<String, Object> myModel = new HashMap<String, Object>();
 
-		AcademicTerm a = serviceAcademicTerm.getAcademicTerm(id_degree);
+		AcademicTerm a = serviceAcademicTerm.getAcademicTerm(id_academic);
 		myModel.put("academicTerm", a);
 
-		List<Course> courses = serviceCourse.getCoursesByAcademicTerm(id_degree);
+//		List<Course> courses = serviceCourse.getCoursesByAcademicTerm(id_degree);
 		
-		if (courses != null)
-			myModel.put("courses", courses);
+//		if (courses != null)
+			myModel.put("courses", a.getCourses());
 	
 		return new ModelAndView("academicTerm/view", "model", myModel);
 	}

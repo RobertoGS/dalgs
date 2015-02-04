@@ -111,7 +111,7 @@ public class CourseController {
 		List<Activity> activities = serviceActivity.getActivitiesForCourse(id);
 
 		if (activities != null)
-			myModel.put("activities", activities);
+			myModel.put("activities", p.getActivities());
 
 		return new ModelAndView("course/view", "model", myModel);
 	}
